@@ -23,8 +23,9 @@ LICENSE_SOURCE = $(strip $(if $(and $(or $(filter $(NUM_FILES_CHANGED),1), $(fil
 .PHONY: validate-canonical-match
 validate-canonical-match: licenseListPublisher-$(TOOL_VERSION).jar-valid $(TEST_DATA) $(LICENSE_OUTPUT_DIR)
 	git diff-tree --no-commit-id --name-only -r $(SHA_FOR_GITHUB)
+	git diff --name-only origin/$GITHUB_BASE_REF $GITHUB_SHA
 	echo $(SHA_FOR_GITHUB)
-	java -jar -DLocalFsfFreeJson=true -DlistedLicenseSchema="schema/ListedLicense.xsd" licenseListPublisher-$(TOOL_VERSION).jar LicenseRDFAGenerator '$(LICENSE_SOURCE:;=)' '$(LICENSE_OUTPUT_DIR)' 1.0 2000-01-01 $(TEST_DATA) expected-warnings
+#	java -jar -DLocalFsfFreeJson=true -DlistedLicenseSchema="schema/ListedLicense.xsd" licenseListPublisher-$(TOOL_VERSION).jar LicenseRDFAGenerator '$(LICENSE_SOURCE:;=)' '$(LICENSE_OUTPUT_DIR)' 1.0 2000-01-01 $(TEST_DATA) expected-warnings
 
 .PHONY: deploy-license-data
 deploy-license-data: licenseListPublisher-$(TOOL_VERSION).jar-valid $(TEST_DATA)
